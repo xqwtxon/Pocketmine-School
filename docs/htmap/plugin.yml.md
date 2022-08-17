@@ -86,6 +86,12 @@ This is where you declare your plugin description.
 
 This is where you declare your website.
 
+### `src-namespace-prefix`
+
+This is where you declare namespace classes. This feature is upon on the plugin source code structure.
+
+This is not required option, this is only using in order to simplify the process of creating plugins.
+
 ## Further Learning and Conclusion
 
 There are a plenty of `plugin.yml` options I won't mention in this topic, but you can learn more about all the possible `plugin.yml` options in [this website](https://doc.pmmp.io/en/rtfd/developer-reference/plugin-manifest.html).
@@ -97,6 +103,7 @@ name: YourPluginName
 version: 1.0.0
 api: 4.0.0
 main: YourPluginName\YourName\Main
+src-namespace-prefix: YourPluginName\YourName
 author: YourName
 description: Description
 website: Website

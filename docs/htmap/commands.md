@@ -6,19 +6,95 @@ sidebar_label: Commands
 ___
 Using commands in a plugin enchants your plugin! Commands can automatically and easily do things for you!  
 
-Ok lets start by importing the `Command` and `CommandSender` classes using the `use` statement.
+Ok, lets now start by importing the `Command` and `CommandSender`.
 
-```php title="Main.php"
+# External Command Class
+
+External command class are external files that writen in other file.
+
+```php
+<?php
+
+namespace YourPluginName\YourName;
+
 // The Command
 use pocketmine\command\Command;
-      
-// Person who does command
+
+// Person who executed the command.
 use pocketmine\command\CommandSender;
+
+class ExampleCommand extends Command { } // this how we extend the command class.
 ```
+
+Now we are gonna `__construct()` the command to introduce the `OPP` objects.
+
+```php
+public function __construct(){
+     // How it works?
+     // parent::__construct("examplecommand", "Example Description Command", "/examplecommand usage", ["example", "exampleCommandaliases"]);
+     
+     parent::__construct("example", "Example Command", "/example <usage>", ["ex","am","ple"]);
+}
+```
+
+Now we are making command executable:
+
+```php
+public function execute(CommandSender $sender, string $command_label, array $args) :void {
+     $sender->sendMessage("Hello World");
+}
+```
+
+This will send a message "Hello World" in the chat.
+
+Detecting `CommandSender` if its a `Player`:
+
+Import the first the player class by:
+
+```php
+// The player
+use pocketmine\player\Player;
+```
+
+Detect `CommandSender` by using `instanceof`
+
+```php
+public function execute(CommandSender $sender, string $command_label, array $args) :void {
+     if($sender instanceof Player){
+          $sender->sendMessage("You are not player");
+     } else {
+          $sender->sendMessage("You are player");
+     }
+}
+```
+
+You can use `!` in `if` to simplify the detecting by adding `return` statement:
+
+```php
+public function execute(CommandSender $sender, string $command_label, array $args) :void {
+     if(!$sender instanceof Player){
+          $sender->sendMessage("You are not player");
+          return;
+     }
+     $sender->sendMessage("You are player");
+}
+```
+
+Now you can now add to your main class by using:
+
+```php
+$this->getServer()->getCommandMap()->register("ExamplePlugin", new ExampleCommand());
+```
+
+It will send a message to the command sender when the command sender executes the /example command.
+
+# Internal Command Class
+
+Internal Command Class are included in your main file.
 
 To set up the command we're going to use the default `onCommand` method and inside the method we will add the code, like this:
 
-```php title="Main.php"
+```php
 public function onCommand(CommandSender $sender, Command $command, string $label, array $args) : bool{
     switch($command->getName()){
         case "example":
@@ -31,15 +107,8 @@ public function onCommand(CommandSender $sender, Command $command, string $label
 }
 ```
 
-It will send a message to the command sender when the command sender executes the `/example` command.
+It will send a message to the command sender when the command sender executes the /example command.
 
-:::note
-A separate tutorial on commands with detailed explanation is planned, so we temporarily remove the rest of the topic. However you still can find it commented in the [source file](https://github.com/PocketMine-School/Pocketmine-School/blob/master/docs/htmap/commands.md?plain=1).
-
-We apologize for the inconvenience.
-:::
-
-<!-- Thinking of making a separate tutorial on Commands and only putting a simple tutorial here.
 ```php
 public function onCommand(CommandSender $sender, Command $cmd, string $label, array $args) : bool{
   switch($cmd->getName()){ // Use switch to get the command input
@@ -50,9 +119,7 @@ public function onCommand(CommandSender $sender, Command $cmd, string $label, ar
   return true;
 }
 ```
-
 What would happen if the CONSOLE was the command sender? How do we prevent the Console?  
-
 To prevent the situation above we are going to use an if statement including "instanceof"  
 ```php
 public function onCommand(CommandSender $sender, Command $cmd, string $label, array $args) : bool{
@@ -70,9 +137,7 @@ public function onCommand(CommandSender $sender, Command $cmd, string $label, ar
 }
 ```
 Now that we know how to do "basic" commands, let's make the command even better by allowing the user to choose how many steaks he wants by using ARGUMENTS!  
-
 We'll take a look at a variable that we added without knowing what it was... I'm talking about the $args variable.  
-
 It basicly stores every single arguments you use in an array. But how is it stored? Like this:
 ```
   /command <$args[0]> <$args[1]> <$args[2]> <$args[3]> ...
@@ -94,9 +159,7 @@ public function onCommand(CommandSender $sender, Command $cmd, string $label, ar
 }
 ```
 As you can see, now we can use the /test steaks number and it will give us the number of steaks we want!  
-
 But wait, what if the user doesn't enter the argument? The command won't work! To solve that issue, we need to add a parser to check if no argument "0" was entered, and if that's the case, "creating" it.  
-
 We'll use function isset which allows us to check if a variable is defined. Let's what this give use in our code !  
 ```php
 public function onCommand(CommandSender $sender, Command $cmd, string $label, array $args) : bool{
@@ -117,7 +180,6 @@ public function onCommand(CommandSender $sender, Command $cmd, string $label, ar
 }
 ```
 But what if the user don't enter a number? And even if it's a number, what if it's negative?  
-
 We also need to check this in our code! We will use a new function is_int which will allow us to check if a variable is an integer.  
 ```php
 public function onCommand(CommandSender $sender, Command $cmd, string $label, array $args) : bool{
@@ -138,4 +200,6 @@ public function onCommand(CommandSender $sender, Command $cmd, string $label, ar
 }
 ```
 And that's it! You made your first command with arguments!
+
+In some cases, `CommandSender` will return an object if its `Player` or `ConsoleCommandSender`
 -->

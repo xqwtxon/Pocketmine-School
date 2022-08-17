@@ -35,7 +35,7 @@ In the `class` we will add a function to enable your plugin and to do so we will
 ```php title="Main.php"
 class Main extends PluginBase { 
 
-    protected function onEnable() : void{  
+    public function onEnable() : void{  
         $this->getLogger()->info("Plugin has been Enabled");
     }
 
@@ -52,7 +52,7 @@ use pocketmine\plugin\PluginBase;
 
 class Main extends PluginBase { 
 
-    protected function onEnable() : void{  
+    public function onEnable() : void{  
         $this->getLogger()->info("Plugin has been Enabled");
     }
 

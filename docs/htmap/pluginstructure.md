@@ -22,6 +22,12 @@ In your PocketMine-MP server folder, you would find a folder called `plugins` in
 
 In the plugin folder or TestPlugin create a file named `plugin.yml` and a folder named `src`.
 
+:::note
+In PocketMine-MP 4.0.0, now the `src-namespace-prefix` is now available on the `plugin.yml`
+
+Generaly **DevTools** will now generate plugin using `src-namespace-prefix`
+:::
+
 Now your file structure should look like this:  
 ```yml title="/Pocketmine-Server*/plugins/"
 TestPlugin 
