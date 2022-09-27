@@ -61,9 +61,9 @@ Detect `CommandSender` by using `instanceof`
 ```php
 public function execute(CommandSender $sender, string $command_label, array $args) :void {
      if($sender instanceof Player){
-          $sender->sendMessage("You are not player");
-     } else {
           $sender->sendMessage("You are player");
+     } else {
+          $sender->sendMessage("You are not player");
      }
 }
 ```
@@ -86,7 +86,7 @@ Now you can now add to your main class by using:
 $this->getServer()->getCommandMap()->register("ExamplePlugin", new ExampleCommand());
 ```
 
-It will send a message to the command sender when the command sender executes the /example command.
+It will send a message to the command sender when the command sender executes the `/example` command.
 
 # Internal Command Class
 
@@ -107,6 +107,8 @@ public function onCommand(CommandSender $sender, Command $command, string $label
 }
 ```
 
+We dont need to import anything in this method since we're on the main class.
+
 It will send a message to the command sender when the command sender executes the /example command.
 
 ```php
@@ -120,7 +122,7 @@ public function onCommand(CommandSender $sender, Command $cmd, string $label, ar
 }
 ```
 What would happen if the CONSOLE was the command sender? How do we prevent the Console?  
-To prevent the situation above we are going to use an if statement including "instanceof"  
+To prevent the situation above we are going to use an if statement including `instanceof`
 ```php
 public function onCommand(CommandSender $sender, Command $cmd, string $label, array $args) : bool{
   switch($cmd->getName()){
@@ -158,7 +160,7 @@ public function onCommand(CommandSender $sender, Command $cmd, string $label, ar
   return true;
 }
 ```
-As you can see, now we can use the /test steaks number and it will give us the number of steaks we want!  
+As you can see, now we can use the `/test` steaks number and it will give us the number of steaks we want!  
 But wait, what if the user doesn't enter the argument? The command won't work! To solve that issue, we need to add a parser to check if no argument "0" was entered, and if that's the case, "creating" it.  
 We'll use function isset which allows us to check if a variable is defined. Let's what this give use in our code !  
 ```php
