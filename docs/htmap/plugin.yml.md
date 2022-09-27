@@ -86,7 +86,7 @@ This is where you declare your plugin description.
 
 This is where you declare your website.
 
-### `src-namespace-prefix`
+### `src-namespace-prefix:`
 
 This is where you declare namespace classes. This feature is upon on the plugin source code structure.
 
